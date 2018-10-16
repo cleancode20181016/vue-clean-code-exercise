@@ -17,6 +17,7 @@
 </style>
 
 <script>
+  import {default as TimeProvider} from '@/domain/timeProvider.js';
   export default {
     data() {
       return {
@@ -30,7 +31,7 @@
     },
     methods: {
       _isBirthday() {
-        let today = new Date()
+        let today = TimeProvider.now();
         return today.getMonth() === this.profile.birthday.month - 1 && today.getDate() === this.profile.birthday.day
       },
       goToProfile(){
