@@ -21,7 +21,7 @@ describe('Header', () => {
     })
 
     it('not birthday', () => {
-      var wrapper = wrapperInject(new Date(2018, 9, 17))
+        var wrapper = wrapperInject(new Date(2018, 9, 17))
         expect(wrapper.vm.profileCaption).toEqual('Jackson')
     })
 
