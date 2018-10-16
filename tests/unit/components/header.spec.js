@@ -2,8 +2,6 @@ import Header from '@/components/Header'
 import {shallowMount} from '@vue/test-utils'
 
 describe('birthday', () => {
-    let wrapper
-
     function InitShallowMount(today) {
         return shallowMount(Header, 
             { 
