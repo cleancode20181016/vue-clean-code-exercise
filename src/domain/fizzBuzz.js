@@ -14,7 +14,7 @@ export class FizzBuzz{
 
     Show(number){
         let result = [[15, 'FizzBuzz'], [5, 'Buzz'], [3, 'Fizz']].find(divisor => number % divisor[0] === 0);
-        console.log(result);
+        // console.log(result);
         return result && result[1] || number.toString();
     }
 }

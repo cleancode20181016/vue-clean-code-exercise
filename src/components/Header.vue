@@ -20,7 +20,8 @@
   export default {
     data() {
       return {
-        profile: { name: 'Jackson', birthday: {month: 10, day: 18}}
+        profile: { name: 'Jackson', birthday: {month: 10, day: 18}},
+        myToday: null
       }
     },
     computed: {
@@ -30,12 +31,15 @@
     },
     methods: {
       _isBirthday() {
-        let today = new Date()
+        let today = this.getToday();
         return today.getMonth() === this.profile.birthday.month - 1 && today.getDate() === this.profile.birthday.day
       },
       goToProfile(){
         this.$router.push('/profile')
       },
+      getToday(){
+        return this.myToday || new Date();
+      }
     }
   }
 </script>
