@@ -31,11 +31,11 @@ export class Budget {
         }
     }
 
-    _getAmountOfPeriod(momentStartDate, momentEndDate) {
-        const numberOfDaysInMonth = momentEndDate.diff(momentStartDate, 'days') + 1
-        let amountDays = momentStartDate.daysInMonth();
-        let momthBudget = this.budgets[momentStartDate.format("YYYY-MM")] || 0;
-        return numberOfDaysInMonth * ((momthBudget) / amountDays);
+    _getAmountOfPeriod(start, end) {
+        const diffDays = end.diff(start, 'days') + 1
+        let dayCountOfBudget = start.daysInMonth();
+        let amountOfBudget = this.budgets[start.format("YYYY-MM")] || 0;
+        return amountOfBudget / dayCountOfBudget * diffDays;
     }
 }
 
