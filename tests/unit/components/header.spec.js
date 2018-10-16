@@ -5,20 +5,25 @@ describe('birthday', () => {
     let wrapper
     let $router = {push: () => {}}
     let push = jest.spyOn($router, 'push')
+
+    function InitShallowMount(today) {
+        return shallowMount(Header, { methods: { getToday() {
+            return today || new Date()
+        }}});
+    }
  
     it('is my birthday',()=>{
-        let wrapper = shallowMount(Header, { methods: { getToday() {
-            return new Date('2018-10-18')
-        }}});
-
+        let today = new Date('2018-10-18');
+        let wrapper = InitShallowMount(today) 
+        
         expect(wrapper.vm._isBirthday()).toEqual(true);
         expect(wrapper.vm.profileCaption).toEqual('Jackson🎂');
     })
 
     it('is not my birthday',()=>{
-        let wrapper = shallowMount(Header, { methods: { getToday() {
-            return new Date('2018-10-19')
-        }}});
+        let today = new Date('2018-10-19');
+        let wrapper = InitShallowMount(today) 
+        
         expect(wrapper.vm._isBirthday()).toEqual(false);
         expect(wrapper.vm.profileCaption).toEqual('Jackson');
     })
