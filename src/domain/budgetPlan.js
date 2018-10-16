@@ -11,7 +11,7 @@ class Period {
     }
 }
 
-export class Budget {
+export class BudgetPlan {
     budgets = {}
 
     query(startDate, endDate) {
