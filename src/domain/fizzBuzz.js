@@ -1,16 +1,21 @@
 export class FizzBuzz{
-     Show(num) {
+     Show2(number) {
         var result = [];
-        if(num % 3 == 0){
+        if(number % 3 == 0){
             result.push('Fizz');
         }
     
-        if(num % 5 == 0){
+        if(number % 5 == 0){
             result.push('Buzz');
         }
         
+       return result.length ? result.join('') : number.toString();
+    }
 
-        return result.length ? result.join('') : num.toString();
+    Show(number){
+        let result = [[15, 'FizzBuzz'], [5, 'Buzz'], [3, 'Fizz']].find(divisor => number % divisor[0] === 0);
+        console.log(result);
+        return result && result[1] || number.toString();
     }
 }
 
