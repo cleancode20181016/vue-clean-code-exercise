@@ -21,7 +21,6 @@
     data() {
       return {
         profile: { name: 'Jackson', birthday: {month: 10, day: 18}},
-        myToday: null
       }
     },
     computed: {
@@ -38,7 +37,7 @@
         this.$router.push('/profile')
       },
       getToday(){
-        return this.myToday || new Date();
+        return new Date();
       }
     }
   }
