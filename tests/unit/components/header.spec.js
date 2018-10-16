@@ -3,13 +3,16 @@ import {shallowMount} from '@vue/test-utils'
 
 describe('birthday', () => {
     let wrapper
-    let $router = {push: () => {}}
-    let push = jest.spyOn($router, 'push')
 
     function InitShallowMount(today) {
-        return shallowMount(Header, { methods: { getToday() {
-            return today || new Date()
-        }}});
+        return shallowMount(Header, 
+            { 
+                methods: { 
+                    getToday() {
+                        return today || new Date();
+                    }
+                }
+            });
     }
  
     it('is my birthday',()=>{
