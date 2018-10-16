@@ -21,6 +21,7 @@
     data() {
       return {
         profile: { name: 'Jackson', birthday: {month: 10, day: 18}},
+        today: null
       }
     },
     computed: {
