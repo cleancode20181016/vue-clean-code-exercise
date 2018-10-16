@@ -21,11 +21,12 @@ describe('Header', () => {
     })
 
     it('not birthday', () => {
-        expect(wrapper().vm.profileCaption).toEqual('Jackson')
+      var wrapper = wrapperInject(new Date(2018, 9, 17))
+        expect(wrapper.vm.profileCaption).toEqual('Jackson')
     })
 
     it('is birthday', () => {
-        var wapper = wrapperInject(new Date(2018, 9, 18))
-        expect(wapper.vm.profileCaption).toEqual('Jackson🎂')
+        var wrapper = wrapperInject(new Date(2018, 9, 18))
+        expect(wrapper.vm.profileCaption).toEqual('Jackson🎂')
     })
 })
