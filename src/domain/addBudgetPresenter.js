@@ -1,28 +1,14 @@
 import Api from "../api";
-import {upperFirst} from 'lodash'
+import {FORMAT, NOT_EMPTY, POSITIVE_NUMBER} from "./Validator";
 
 export default class AddBudgetPresenter {
   budget = {month: '', amount: 0}
   errors = {month: '', amount: ''}
 
   save(success) {
-    let notEmpty = value => value !== ''
-    let emptyError = field => `${upperFirst(field)} cannot be empty`
-    let format = value => (/^\d{4}-\d{2}$/g).test(value)
-    let formatError = field => `Invalid ${field} format`
-
-    let positiveNumber = value => !isNaN(parseInt(value)) && value >= 0
-    let positiveError = field => `Invalid ${field}`
-
-    let validations = {
-      month: [
-        {validate: notEmpty, error: emptyError},
-        {validate: format, error: formatError},
-      ],
-      amount: [
-        {validate: notEmpty, error: emptyError},
-        {validate: positiveNumber, error: positiveError},
-      ]
+    const validations = {
+      month: [ NOT_EMPTY, FORMAT ],
+      amount: [ NOT_EMPTY, POSITIVE_NUMBER ]
     }
     for (let field in validations) {
       let failure = validations[field].find(validation => !validation.validate(this.budget[field]))
