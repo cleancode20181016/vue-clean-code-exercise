@@ -24,6 +24,7 @@ export default class Validator {
       callback(field, failure.error(field))
       this.errors[field] = failure.error(field)
     }
+    return this.valid
   }
 
   get valid(){
