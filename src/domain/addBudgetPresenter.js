@@ -1,35 +1,33 @@
 import Api from "../api";
+import {upperFirst} from 'lodash'
 
 export default class AddBudgetPresenter {
   budget = {month: '', amount: 0}
   errors = {month: '', amount: ''}
 
   save(success) {
-    let validateMonthEmpty = () => this.budget.month === ''
-    const MONTH_EMPTY_ERROR = 'Month cannot be empty';
-    let validateMonthFormat = () => !(/^\d{4}-\d{2}$/g).test(this.budget.month)
-    const MONTH_FORMAT_ERROR = 'Invalid month format';
+    let notEmpty = value => value !== ''
+    let emptyError = field => `${upperFirst(field)} cannot be empty`
+    let format = value => (/^\d{4}-\d{2}$/g).test(value)
+    let formatError = field => `Invalid ${field} format`
 
-    let validateAmountEmpty = () => this.budget.amount === ''
-    const AMOUNT_EMPTY_ERROR = 'Amount cannot be empty';
-    let validateAmountPositiveNumber = () => isNaN(parseInt(this.budget.amount, 10)) || this.budget.amount < 0
-    const AMOUNT_NUMBER_ERROR = 'Invalid amount';
+    let positiveNumber = value => !isNaN(parseInt(value)) && value >= 0
+    let positiveError = field => `Invalid ${field}`
 
     let validations = {
       month: [
-        {validate: validateMonthEmpty, error: MONTH_EMPTY_ERROR},
-        {validate: validateMonthFormat, error: MONTH_FORMAT_ERROR},
-        {validate: () => true, error: ''}
+        {validate: notEmpty, error: emptyError},
+        {validate: format, error: formatError},
       ],
       amount: [
-        {validate: validateAmountEmpty, error: AMOUNT_EMPTY_ERROR},
-        {validate: validateAmountPositiveNumber, error: AMOUNT_NUMBER_ERROR},
-        {validate: () => true, error: ''}
+        {validate: notEmpty, error: emptyError},
+        {validate: positiveNumber, error: positiveError},
       ]
     }
     for (let field in validations) {
-      let failure = validations[field].find(validation => validation.validate())
-      this.errors[field] = failure.error
+      let failure = validations[field].find(validation => !validation.validate(this.budget[field]))
+        || {error: () => ''}
+      this.errors[field] = failure.error(field)
     }
 
 
