@@ -1,8 +1,8 @@
 import Api from "../api";
 
 export default class AddBudgetPresenter {
-  budget = {}
-  errors = {}
+  budget = {month: '', amount: 0}
+  errors = {month: '', amount : ''}
   do(success){
     let monthValid, amountValid
     if (this.budget.month === '') {
