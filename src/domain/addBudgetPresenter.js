@@ -1,6 +1,6 @@
 import Api from "../api";
 
-export default class AddBudgetAction {
+export default class AddBudgetPresenter {
   budget = {}
   errors = {}
   do(success){
