@@ -1,5 +1,6 @@
 import Api from "../api";
 import {FORMAT, NOT_EMPTY, POSITIVE_NUMBER} from "./Validator";
+import Validator from "./Validator";
 
 export default class AddBudgetPresenter {
   budget = {month: '', amount: 0}
@@ -10,14 +11,11 @@ export default class AddBudgetPresenter {
       month: [ NOT_EMPTY, FORMAT ],
       amount: [ NOT_EMPTY, POSITIVE_NUMBER ]
     }
-    for (let field in validations) {
-      let failure = validations[field].find(validation => !validation.validate(this.budget[field]))
-        || {error: () => ''}
-      this.errors[field] = failure.error(field)
-    }
+    const data = this.budget;
+    let validator = new Validator(validations)
+    validator.validate(data, (field, error) => this.errors[field] = error)
 
-
-    if (this.errors.month !== '' || this.errors.amount !== '') {
+    if (!validator.valid) {
       return
     }
     let budgets = Api.getBudgets()
