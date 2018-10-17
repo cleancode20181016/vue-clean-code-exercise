@@ -45,10 +45,7 @@
       }
     },
     beforeMount() {
-      let profile = Api.getProfile()
-      if (profile !== null) {
-        this.profile = profile
-      }
+      this.profile = Api.getProfile()
     }
   }
 </script>

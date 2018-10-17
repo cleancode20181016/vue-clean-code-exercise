@@ -76,7 +76,7 @@
           return
         }
         let budgets = Api.getBudgets()
-        let existing = budgets && budgets.find(budget => budget.month === this.budget.month)
+        let existing = budgets.find(budget => budget.month === this.budget.month)
         if (existing) {
           Api.updateBudget(this.budget)
         } else {
