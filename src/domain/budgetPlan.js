@@ -28,7 +28,15 @@ class Budget {
     }
 
     getPeriod() {
-        return new Period(moment(this.month, 'YYYY-MM').startOf('month'), moment(this.month, 'YYYY-MM').endOf('month'))
+        return new Period(this.getStart(), this.getEnd())
+    }
+
+    getEnd() {
+        return moment(this.month, 'YYYY-MM').endOf('month');
+    }
+
+    getStart() {
+        return moment(this.month, 'YYYY-MM').startOf('month');
     }
 
     getAmountOfOverlapping(period) {
