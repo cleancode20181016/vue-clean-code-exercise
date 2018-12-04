@@ -33,6 +33,10 @@ class MonthBudget {
       moment(this.month).endOf('month'),
     )
   }
+  getAmountOfPeriod (period) {
+    const overlappingDays = period.getOverlapping(this.getPeriod()).getDayCount()
+    return overlappingDays * (this.amount / this.getDayCount())
+  }
 }
 
 export class Budget {
@@ -54,15 +58,13 @@ export class Budget {
 
     const monthDiff = period.end.diff(period.start, 'months') + 1
     for (let month = 0; month <= monthDiff; month++) {
-      totalAmount += this._getAmountFromPeriod(period, moment(period.start).add(month, 'month'))
+      const thisMonth = moment(period.start).add(month, 'month')
+      const monthBudget = new MonthBudget(
+        thisMonth,
+        this.budgets[thisMonth.format('YYYY-MM')] || 0
+      )
+      totalAmount += monthBudget.getAmountOfPeriod(period)
     }
     return totalAmount
-  }
-
-  _getAmountFromPeriod (period, month) {
-    const monthBudget = new MonthBudget(month, this.getMonthBudgetAmount(month))
-    const monthPeriod = monthBudget.getPeriod()
-    const overlappingDays = period.getOverlapping(monthPeriod).getDayCount()
-    return overlappingDays * (monthBudget.amount / monthBudget.getDayCount())
   }
 }
