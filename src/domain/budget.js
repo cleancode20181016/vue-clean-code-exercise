@@ -5,6 +5,9 @@ class Period {
     this.start = start
     this.end = end
   }
+  getDayCount () {
+    return this.end.diff(this.start, 'days') + 1
+  }
 }
 
 export class Budget {
@@ -24,7 +27,7 @@ export class Budget {
   _query(period) {
 
     if (period.start.isSame(period.end, 'month')) {
-      const diffDays = period.end.diff(period.start, 'days') + 1
+      const diffDays = period.getDayCount()
       const budget = (this.getMonthBudgetAmount(period.start) / period.start.daysInMonth()) * diffDays
       return budget
     }
@@ -59,14 +62,10 @@ export class Budget {
 
 const getNumbersOfDaysInStartMonth = momentStartDate => {
   const endDate = moment(momentStartDate).endOf('month')
-  const remainingDays = endDate.diff(momentStartDate, 'days')
-
-  return remainingDays + 1
+  return new Period(momentStartDate, endDate).getDayCount()
 }
 
 const getNumbersOfDaysInEndMonth = momentEndDate => {
   const startDate = moment(momentEndDate).startOf('month')
-  const remainingDays = momentEndDate.diff(startDate, 'days')
-
-  return remainingDays + 1
+  return new Period(startDate, momentEndDate).getDayCount()
 }
