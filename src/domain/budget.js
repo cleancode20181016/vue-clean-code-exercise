@@ -20,7 +20,7 @@ class Period {
 
 class MonthBudget {
   constructor(month, amount) {
-    this.month = month
+    this.month = moment(month, 'YYYY-MM')
     this.amount = amount
   }
 
@@ -41,10 +41,6 @@ class MonthBudget {
 export class Budget {
   budgets = {}
 
-  getMonthBudgetAmount(date) {
-    return this.budgets[date.format('YYYY-MM')] || 0
-  }
-
   query(startDate, endDate) {
     return this._query(new Period(
       moment(startDate, 'YYYY-MM-DD'),
@@ -53,17 +49,9 @@ export class Budget {
   }
 
   _query(period) {
-    let totalAmount = 0
-
-    const monthDiff = period.end.diff(period.start, 'months') + 1
-    for (let month = 0; month <= monthDiff; month++) {
-      const thisMonth = moment(period.start).add(month, 'month')
-      const monthBudget = new MonthBudget(
-        thisMonth,
-        this.budgets[thisMonth.format('YYYY-MM')] || 0
-      )
-      totalAmount += monthBudget.getAmountOfPeriod(period)
-    }
-    return totalAmount
+    return Object.entries(this.budgets)
+      .map(([month, amount]) => new MonthBudget(month, amount))
+      .map(b => b.getAmountOfPeriod(period))
+      .reduce((sum, amount) => sum + amount, 0)
   }
 }
