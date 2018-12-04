@@ -42,31 +42,14 @@ export class Budget {
   }
 
   _query(period) {
-    if (period.start.isSame(period.end, 'month')) {
-      const diffDays = period.getDayCount()
-      return (this.getMonthBudgetAmount(period.start) / period.start.daysInMonth()) * diffDays
-    }
     let budget = 0
 
-    // start month
-    budget += this._getAmountFromPeriod(new Period(
-      period.start,
-      moment(period.start).endOf('month')
-    ), period.start)
-
-    // months in between
-    const monthDiff = period.end.diff(period.start, 'months') - 1
-    for (let month = 1; month <= monthDiff; month++) {
+    const monthDiff = period.end.diff(period.start, 'months') + 1
+    for (let month = 0; month <= monthDiff; month++) {
       const thisMonth = moment(period.start)
         .add(month, 'month')
       budget += this._getAmountFromPeriod(period, thisMonth)
     }
-
-    // end month
-    budget += this._getAmountFromPeriod(new Period(
-      moment(period.end).startOf('month'),
-      period.end
-    ), period.end)
     return budget
   }
 
