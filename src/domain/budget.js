@@ -5,7 +5,7 @@ class Period {
     this.start = start
     this.end = end
   }
-  getDayCount () {
+  get dayCount () {
     return this.end.diff(this.start, 'days') + 1
   }
   getOverlappingDays (other) {
@@ -14,7 +14,7 @@ class Period {
     if (start.isAfter(end)) {
       return 0
     }
-    return new Period(start, end).getDayCount()
+    return new Period(start, end).dayCount
   }
 }
 
@@ -24,7 +24,7 @@ class MonthBudget {
     this.amount = amount
   }
 
-  getDayCount () {
+  get dayCount () {
     return this.month.daysInMonth()
   }
   getPeriod () {
@@ -34,7 +34,7 @@ class MonthBudget {
     )
   }
   getAmountOfPeriod (period) {
-    return period.getOverlappingDays(this.getPeriod()) * (this.amount / this.getDayCount())
+    return period.getOverlappingDays(this.getPeriod()) * (this.amount / this.dayCount)
   }
 }
 
