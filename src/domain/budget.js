@@ -10,6 +10,13 @@ class Period {
   }
 }
 
+class MonthBudget {
+  constructor(month, amount) {
+    this.month = month
+    this.amount = amount
+  }
+}
+
 export class Budget {
   budgets = {}
 
@@ -54,6 +61,7 @@ export class Budget {
   }
 
   _getAmountFromPeriod (period, month) {
-    return period.getDayCount() * (this.getMonthBudgetAmount(month) / month.daysInMonth())
+    const monthBudget = new MonthBudget(month, this.getMonthBudgetAmount(month))
+    return period.getDayCount() * (monthBudget.amount / monthBudget.month.daysInMonth())
   }
 }
