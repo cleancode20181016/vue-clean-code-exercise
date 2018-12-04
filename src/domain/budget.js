@@ -42,15 +42,15 @@ export class Budget {
   }
 
   _query(period) {
-    let budget = 0
+    let totalAmount = 0
 
     const monthDiff = period.end.diff(period.start, 'months') + 1
     for (let month = 0; month <= monthDiff; month++) {
       const thisMonth = moment(period.start)
         .add(month, 'month')
-      budget += this._getAmountFromPeriod(period, thisMonth)
+      totalAmount += this._getAmountFromPeriod(period, thisMonth)
     }
-    return budget
+    return totalAmount
   }
 
   _getAmountFromPeriod (period, month) {
