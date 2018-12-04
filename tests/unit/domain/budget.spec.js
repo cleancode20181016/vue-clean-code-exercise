@@ -1,8 +1,4 @@
-import {
-  Budget,
-  getNumbersOfDaysInStartMonth,
-  getNumbersOfDaysInEndMonth
-} from '@/domain/budget'
+import { Budget } from '@/domain/budget'
 
 describe('Budget', () => {
   let budget
@@ -63,22 +59,6 @@ describe('Budget', () => {
           expect(budget.query('2018-06-15', '2018-08-15')).toEqual(1600 + 3100 + 1500)
         })
       })
-    })
-  })
-})
-
-describe('getNumbersOfDaysInStartMonth', () => {
-  describe('when month is 2018-07-01', () => {
-    it('should return 31', () => {
-      expect(getNumbersOfDaysInStartMonth('2018-07-01')).toEqual(31)
-    })
-  })
-})
-
-describe('getNumbersOfDaysInEndMonth', () => {
-  describe('when date is 2018-07-15', () => {
-    it('should return 15', () => {
-      expect(getNumbersOfDaysInEndMonth('2018-07-15')).toEqual(15)
     })
   })
 })
