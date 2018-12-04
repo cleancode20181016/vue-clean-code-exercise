@@ -25,11 +25,9 @@ export class Budget {
   }
 
   _query(period) {
-
     if (period.start.isSame(period.end, 'month')) {
       const diffDays = period.getDayCount()
-      const budget = (this.getMonthBudgetAmount(period.start) / period.start.daysInMonth()) * diffDays
-      return budget
+      return (this.getMonthBudgetAmount(period.start) / period.start.daysInMonth()) * diffDays
     }
     let budget = 0
 
@@ -37,24 +35,21 @@ export class Budget {
     const numberOfDaysInStartMonth = getNumbersOfDaysInStartMonth(period.start)
     const amountDaysFirst = period.start.daysInMonth()
     const firstMonthBudget = this.getMonthBudgetAmount(period.start)
-    const totalBudgetFirstMonth = numberOfDaysInStartMonth * (firstMonthBudget / amountDaysFirst)
-    budget += totalBudgetFirstMonth
+    budget += numberOfDaysInStartMonth * (firstMonthBudget / amountDaysFirst)
 
     // months in between
     const monthDiff = period.end.diff(period.start, 'months') - 1
     for (let month = 1; month <= monthDiff; month++) {
       const thisMonth = moment(period.start)
         .add(month, 'month')
-      const budgetThisMonth = this.getMonthBudgetAmount(thisMonth)
-      budget += budgetThisMonth
+      budget += this.getMonthBudgetAmount(thisMonth)
     }
 
     // end month
     const numberOfDaysInLastMonth = getNumbersOfDaysInEndMonth(period.end)
     const amountDaysLast = period.end.daysInMonth()
     const lastMonthBudget = this.getMonthBudgetAmount(period.end)
-    const totalBudgetLastMonth = numberOfDaysInLastMonth * (lastMonthBudget / amountDaysLast)
-    budget += totalBudgetLastMonth
+    budget += numberOfDaysInLastMonth * (lastMonthBudget / amountDaysLast)
     return budget
   }
 }
